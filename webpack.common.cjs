@@ -4,6 +4,8 @@ const DotenvPlugin = require('dotenv-webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const baseManifest = require("./src/manifest.json");
+const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
 
 module.exports = {
   entry: {
@@ -44,6 +46,14 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [{ from: 'static' }],
+    }),
+    new WebpackExtensionManifestPlugin({
+      config: {
+        base: baseManifest
+      },
+      pkgJsonProps: [
+        'version'
+      ]
     }),
   ],
 };
